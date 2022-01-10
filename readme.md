@@ -1,16 +1,18 @@
 # odata-v2-types
 
-Generate types from oData V2 metadata.
+Generate types from OData V2 metadata.
 
 ## Usage
 
 ```bash
-git clone repo/path
+git clone git@github.com:borolgs/odata-v2-types.git
 npm i -g pnpm
 pnpm i
 
+pnpm test
+
+pnpm start -- -m temp/metadata.xml -t temp/metadata.types.ts
 pnpm exec ts-node src/index.ts -m 'https://services.odata.org/OData/OData.svc/$metadata' -t temp/example-metadata.types.ts
-pnpm exec ts-node src/index.ts -m temp/metadata.xml -t temp/metadata.types.ts
 ```
 
 ## References
