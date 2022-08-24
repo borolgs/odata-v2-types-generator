@@ -62,14 +62,13 @@ export type EntityType = {
   NavigationProperty?: NavigationProperty[];
 };
 
-export type Metadata = {
-  namespace: string;
-  entityTypes: EntityType[];
-  complexTypes: ComplexType[];
-  associations: Association[];
-
+export type Schema = {
+  Namespace: string;
+  EntityType?: EntityType[];
+  ComplexType?: ComplexType[];
+  Association?: Association[];
   // TODO: https://sapui5.hana.ondemand.com/1.36.6/docs/guide/341823349ed04df1813197f2a0d71db2.html
-  // add entityContainer
+  // EntityContainer: any;
 };
 
 export function isPrimitive(type: string): type is PrimitivePropertyType {

@@ -9,10 +9,18 @@ git clone git@github.com:borolgs/odata-v2-types.git
 npm i -g pnpm
 pnpm i
 
-pnpm test
+pnpm run test
+pnpm run build
+```
 
-pnpm start -- -m temp/metadata.xml -t temp/metadata.types.ts
-pnpm exec ts-node src/index.ts -m 'https://services.odata.org/OData/OData.svc/$metadata' -t temp/example-metadata.types.ts
+```ts
+import { createTypesFromMetadata } from 'odata-v2-types';
+import { request } from 'undici';
+
+const { body } = await request('https://services.odata.org/OData/OData.svc/$metadata', { method: 'GET' });
+const xml = await body.text();
+
+const tsSource = createTypesFromMetadata(xml);
 ```
 
 ## References

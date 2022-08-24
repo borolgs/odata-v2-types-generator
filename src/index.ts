@@ -1,3 +1,1 @@
-import { run } from './cli';
-
-run();
+export { createTypesFromMetadata } from './create-types';
