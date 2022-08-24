@@ -1,10 +1,9 @@
 import ts from 'typescript';
-import * as OdataV2 from './odata-v2.types';
-import { createMetadata, MetadataWrapper } from './metadata';
+import * as OdataV2 from './odata-v2-types';
+import { MetadataWrapper } from './metadata-wrapper';
 
 export function createTypesFromMetadata(xml: string): string {
-  const metadata = createMetadata(xml);
-  const metadataWrapper = new MetadataWrapper(metadata);
+  const metadataWrapper = MetadataWrapper.fromString(xml);
   const source = createSource(metadataWrapper);
   return source;
 }

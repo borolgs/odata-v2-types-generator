@@ -1,8 +1,7 @@
-import { execPath } from 'process';
 import ts from 'typescript';
 import { createComplexTypeAliasDeclaration, createEntityTypeAliasDeclaration } from './create-types';
-import { MetadataWrapper } from './metadata';
-import { ComplexType, EntityType } from './odata-v2.types';
+import { MetadataWrapper } from './metadata-wrapper';
+import { ComplexType, EntityType } from './odata-v2-types';
 
 const printer = ts.createPrinter();
 const print = (node: ts.Node) => {
@@ -48,10 +47,10 @@ export type SomeComplexType = {
       ],
     };
     const metadata = new MetadataWrapper({
-      namespace: 'SomeNamespace',
-      entityTypes: [entityTypeInfo],
-      complexTypes: [],
-      associations: [],
+      Namespace: 'SomeNamespace',
+      EntityType: [entityTypeInfo],
+      ComplexType: [],
+      Association: [],
     });
 
     const typeAliasDeclaration = createEntityTypeAliasDeclaration(entityTypeInfo, metadata);
@@ -79,8 +78,8 @@ export type SomeEntityType = {
       ],
     };
     const metadata = new MetadataWrapper({
-      namespace: 'SomeNamespace',
-      entityTypes: [
+      Namespace: 'SomeNamespace',
+      EntityType: [
         entityTypeInfo,
         {
           Name: 'AnotherEntityType',
@@ -91,8 +90,8 @@ export type SomeEntityType = {
           ],
         },
       ],
-      complexTypes: [],
-      associations: [
+      ComplexType: [],
+      Association: [
         {
           Name: 'SomeEntityType_A_S_AnotherEntityType',
           End: [
@@ -134,8 +133,8 @@ export type SomeEntityType = {
       ],
     };
     const metadata = new MetadataWrapper({
-      namespace: 'SomeNamespace',
-      entityTypes: [
+      Namespace: 'SomeNamespace',
+      EntityType: [
         entityTypeInfo,
         {
           Name: 'AnotherEntityType',
@@ -146,8 +145,8 @@ export type SomeEntityType = {
           ],
         },
       ],
-      complexTypes: [],
-      associations: [
+      ComplexType: [],
+      Association: [
         {
           Name: 'SomeEntityType_A_S_AnotherEntityType',
           End: [
