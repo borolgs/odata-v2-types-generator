@@ -1,13 +1,12 @@
-# odata-v2-types
+# oData V2 Types Generator
 
 Generate types from OData V2 metadata.
 
 ## Usage
 
 ```bash
-git clone git@github.com:borolgs/odata-v2-types.git
 npm i -g pnpm
-pnpm i
+pnpm i -D odata-v2-types-generator
 
 pnpm run test
 pnpm run build

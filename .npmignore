@@ -1,0 +1,5 @@
+src/
+.babelrc
+.prettierrc
+.eslintrc.js
+jest.config.js

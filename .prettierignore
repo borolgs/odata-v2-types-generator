@@ -1,0 +1,6 @@
+
+.vscode
+dist
+node_modules
+vite.config.ts
+jest.config.ts
