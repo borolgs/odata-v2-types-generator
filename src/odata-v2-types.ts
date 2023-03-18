@@ -20,6 +20,7 @@ export type Property = {
   Name: string;
   Type: PrimitivePropertyType | string;
   Nullable?: boolean;
+  [key: string]: any;
 };
 
 export type NavigationProperty = {
@@ -56,7 +57,7 @@ export type ComplexType = {
 };
 
 export type EntityType = {
-  Key: { PropertyRef: { Name: string } };
+  Key: { PropertyRef: { Name: string }[] };
   Name: string;
   Property?: Property[];
   NavigationProperty?: NavigationProperty[];

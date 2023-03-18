@@ -21,15 +21,19 @@ describe('create-types', () => {
       ],
     };
 
-    const typeAliasDeclaration = createComplexTypeAliasDeclaration(complexTypeInfo);
+    const metadata = new MetadataWrapper({
+      Namespace: 'SomeNamespace',
+      EntityType: [],
+      ComplexType: [complexTypeInfo],
+      Association: [],
+    });
+
+    const typeAliasDeclaration = createComplexTypeAliasDeclaration(complexTypeInfo, metadata);
     const source = print(typeAliasDeclaration);
 
-    const expected = `/** Complex Type */
-export type SomeComplexType = {
+    const expected = `export type SomeComplexType = {
     A: string;
-    /** Int32 */
     B: number;
-    /** DateTime */
     C?: Date;
 };`;
 
@@ -39,7 +43,7 @@ export type SomeComplexType = {
   it('createEntityTypeAliasDeclaration() create simple enitity type from metadata', () => {
     const entityTypeInfo: EntityType = {
       Name: 'SomeEntityType',
-      Key: { PropertyRef: { Name: 'Id' } },
+      Key: { PropertyRef: [{ Name: 'Id' }] },
       Property: [
         { Name: 'Id', Type: 'Edm.Int32' },
         { Name: 'A', Type: 'Edm.String' },
@@ -56,12 +60,9 @@ export type SomeComplexType = {
     const typeAliasDeclaration = createEntityTypeAliasDeclaration(entityTypeInfo, metadata);
     const source = print(typeAliasDeclaration);
 
-    const expected = `/** Entity */
-export type SomeEntityType = {
-    /** Int32 */
+    const expected = `export type SomeEntityType = {
     Id: number;
     A: string;
-    /** DateTime */
     B?: Date;
 };`;
 
@@ -71,7 +72,7 @@ export type SomeEntityType = {
   it('createEntityTypeAliasDeclaration() create enitity type with 1..1 navigation property', () => {
     const entityTypeInfo: EntityType = {
       Name: 'SomeEntityType',
-      Key: { PropertyRef: { Name: 'Id' } },
+      Key: { PropertyRef: [{ Name: 'Id' }] },
       Property: [{ Name: 'Id', Type: 'Edm.Int32' }],
       NavigationProperty: [
         { Name: 'A', Relationship: 'SomeNamespace.SomeEntityType_A_S_AnotherEntityType', FromRole: '', ToRole: '' },
@@ -83,7 +84,7 @@ export type SomeEntityType = {
         entityTypeInfo,
         {
           Name: 'AnotherEntityType',
-          Key: { PropertyRef: { Name: 'Id' } },
+          Key: { PropertyRef: [{ Name: 'Id' }] },
           Property: [{ Name: 'Id', Type: 'Edm.Int32' }],
           NavigationProperty: [
             { Name: 'S', Relationship: 'SomeNamespace.SomeEntityType_A_S_AnotherEntityType', FromRole: '', ToRole: '' },
@@ -113,9 +114,7 @@ export type SomeEntityType = {
     const typeAliasDeclaration = createEntityTypeAliasDeclaration(entityTypeInfo, metadata);
     const source = print(typeAliasDeclaration);
 
-    const expected = `/** Entity */
-export type SomeEntityType = {
-    /** Int32 */
+    const expected = `export type SomeEntityType = {
     Id: number;
     A?: AnotherEntityType;
 };`;
@@ -126,7 +125,7 @@ export type SomeEntityType = {
   it('createEntityTypeAliasDeclaration() create enitity type with 1..* navigation property', () => {
     const entityTypeInfo: EntityType = {
       Name: 'SomeEntityType',
-      Key: { PropertyRef: { Name: 'Id' } },
+      Key: { PropertyRef: [{ Name: 'Id' }] },
       Property: [{ Name: 'Id', Type: 'Edm.Int32' }],
       NavigationProperty: [
         { Name: 'A', Relationship: 'SomeNamespace.SomeEntityType_A_S_AnotherEntityType', FromRole: '', ToRole: '' },
@@ -138,7 +137,7 @@ export type SomeEntityType = {
         entityTypeInfo,
         {
           Name: 'AnotherEntityType',
-          Key: { PropertyRef: { Name: 'Id' } },
+          Key: { PropertyRef: [{ Name: 'Id' }] },
           Property: [{ Name: 'Id', Type: 'Edm.Int32' }],
           NavigationProperty: [
             { Name: 'S', Relationship: 'SomeNamespace.SomeEntityType_A_S_AnotherEntityType', FromRole: '', ToRole: '' },
@@ -168,9 +167,7 @@ export type SomeEntityType = {
     const typeAliasDeclaration = createEntityTypeAliasDeclaration(entityTypeInfo, metadata);
     const source = print(typeAliasDeclaration);
 
-    const expected = `/** Entity */
-export type SomeEntityType = {
-    /** Int32 */
+    const expected = `export type SomeEntityType = {
     Id: number;
     A?: {
         results: AnotherEntityType[];

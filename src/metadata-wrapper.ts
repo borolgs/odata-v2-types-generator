@@ -4,7 +4,7 @@ import * as OdataV2 from './odata-v2-types';
 export class MetadataWrapper {
   private associationsDict: Record<string, OdataV2.Association>;
 
-  constructor(private readonly schema: OdataV2.Schema) {
+  constructor(readonly schema: OdataV2.Schema) {
     this.associationsDict = this.createAssociationsDict();
   }
 
@@ -47,7 +47,7 @@ function parseMetadata(xml: string): OdataV2.Schema {
     removeNSPrefix: true,
     parseAttributeValue: true,
     isArray: (tagName) =>
-      ['NavigationProperty', 'Property', 'ComplexType', 'EntityType', 'Association'].includes(tagName),
+      ['NavigationProperty', 'Property', 'ComplexType', 'EntityType', 'Association', 'PropertyRef'].includes(tagName),
   });
   const jObj = parser.parse(xml);
 
