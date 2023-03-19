@@ -5,21 +5,47 @@ Generate types from OData V2 metadata.
 ## Usage
 
 ```bash
-npm i -g pnpm
 pnpm i -D odata-v2-types-generator
-
-pnpm run test
-pnpm run build
 ```
 
 ```ts
-import { createTypesFromMetadata } from 'odata-v2-types';
+import { createTypesFromMetadata } from 'odata-v2-types-generator';
 import { request } from 'undici';
 
 const { body } = await request('https://services.odata.org/OData/OData.svc/$metadata', { method: 'GET' });
 const xml = await body.text();
 
 const tsSource = createTypesFromMetadata(xml);
+```
+
+### Options
+
+```ts
+const tsSource = createTypesFromMetadata(xml, {
+  onCreateEntity: (typeAlias, { metadata, entity }) => {
+    ts.addSyntheticLeadingComment(
+      typeAlias,
+      ts.SyntaxKind.MultiLineCommentTrivia,
+      `*\n* ${metadata.schema.Namespace}.${entity.Name}\n`,
+      true,
+    );
+  },
+  onCreateEntityProperty: (propertySignature, { metadata, entity, property }) => {},
+  onCreateComplexType: (typeAlias, { metadata, complexType }) => {},
+  onCreateComplexTypeProperty: (propertySignature, { metadata, complexType, property }) => {},
+});
+```
+
+Output:
+
+```ts
+/**
+ * ServiceName.EntityName
+ */
+export type EntityName = {
+  Id: string;
+  Name: string;
+};
 ```
 
 ## References
