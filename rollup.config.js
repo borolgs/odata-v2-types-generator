@@ -18,7 +18,6 @@ export default defineConfig([
     ],
     plugins: [typescript(), commonjs()],
   },
-
   {
     input: 'src/index.ts',
     output: {

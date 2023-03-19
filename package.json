@@ -1,7 +1,7 @@
 {
   "name": "odata-v2-types-generator",
   "license": "MIT",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
   "types": "dist/index.d.ts",
